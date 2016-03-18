@@ -15,23 +15,36 @@ function gmms = gmmTrain( dir_train, max_iter, epsilon, M )
 %                                          is a vector
 %                            gmm.cov     : DxDxM matrix of covariances. 
 %                                          (:,:,i) is for i^th mixture
-gmms = struct();
+%gmms is a cell array of structs
+gmms = {};
 %initilaize theta
 files = dir(dir_train);
+count = 0;
 %I DONT KNOW HOW TO INITILIAZE WHY GAUSSIAN WHYY
 for i=1:length(files)
-    %disp(files(i).name);
+
     if (strcmp(files(i).name,'.') || strcmp(files(i).name,'..'))
     else
-        gmm = struct();
-        gmm.name = files(i).name;
-        %disp(gmm.name);
-        gmms.(files(i).name) = gmm;
+        count = count + 1;
+        speaker = files(i).name;
+        mfcc_data = [];
+        speaker_data_path = strcat(dir_train,'/',speaker,'/');
+        %Create struct for each speaker
+        gmms{count} = struct();
+        gmms{count}.name = speaker;
+        %Get the mfcc files from directories (used to train gausians)
+        
+        mfcc_files = dir(strcat(speaker_data_path,'*.mfcc'));
+        for j=1:length(mfcc_files)
+            mfcc_file = load(strcat(speaker_data_path,mfcc_files(j).name));
+            mfcc_data = [mfcc_data;mfcc_file];
+        end
+   
     end
 end
 
 return;
-%struct of structs 
+ 
 
 i=0;
 prev_L = -Inf;
