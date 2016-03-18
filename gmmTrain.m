@@ -50,7 +50,7 @@ theta = init_gaussians(M);
 return;
 
 while i<=max_iter && improvement >= epsilon
-    %L = compute(theta, X);
+    L = compute(theta, X);
     %theta = update(theta, X, L);
     improvement = L-prev_L;
     prev_L = L;
@@ -59,17 +59,52 @@ end
 
 return;
 
-function theta = init_gaussians(m)
+function theta = init_gaussians(m, X)
     theta = struct();
-    w = zeros(m ,1);
+    w = zeros(1, m);
+    cov = zeros(length(X), length(X), m);
+    mean = zeroes(length(X), m);
     for i=1:m
         w(i) = 1/m;
+        for j=1:length(X)
+            mean(j,i) = 0;
+            for k=1:length(X)
+                if(k==j)
+                    cov(k,j,i) = 1;
+                end
+            end
+        end
     end
     theta.w = w;
-    theta.mean = 1/m;
-    theta.sum = 1;
+    theta.mean = mean;
+    theta.cov = cov;
 return;
 
-function loglike = compute(theta, mfcc_data)
+function L = compute(theta, mfcc_data)
+    d = length(mfcc_data);
+    b = zeros(M, 1);
+    for j=1:M
+        sum = 0;
+        d = length(mfcc_data);
+        for i=1:d
+            sum = sum + ((mfcc_data(i) - theta.mean(i,j))^2)/cov(i,j,j);
+        end
+        num = exp(-0.5*sum);
+        prod = eye(d);
+        for i=1:d
+            prod = prod*cov(i,j);
+        end
+        denom = ((2*pi)^(d/2))*prod^0.5;
+        b = num/denom;
+    end
+    weight_sum = 0;
+    for i=1:M
+        weight_sum = weight_sum + theta.w(i)*b;
+    end
     
+    L = zeros(M, 1);
+    for i=1:M
+        L(i) = theta.w(i)*b/weight_sum;
+    end
+    return;
 return;
