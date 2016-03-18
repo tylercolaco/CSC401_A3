@@ -42,18 +42,34 @@ for i=1:length(files)
    
     end
 end
-
-return;
  
-
 i=0;
 prev_L = -Inf;
 improvement = Inf;
+theta = init_gaussians(M);
+return;
 
-while i<max_iter && improvement > epsilon
-    L = compute;
-    theta = update;
+while i<=max_iter && improvement >= epsilon
+    %L = compute(theta, X);
+    %theta = update(theta, X, L);
     improvement = L-prev_L;
     prev_L = L;
     i = i+1;
 end
+
+return;
+
+function theta = init_gaussians(m)
+    theta = struct();
+    w = zeros(m ,1);
+    for i=1:m
+        w(i) = 1/m;
+    end
+    theta.w = w;
+    theta.mean = 1/m;
+    theta.sum = 1;
+return;
+
+function loglike = compute(theta, mfcc_data)
+    
+return;
