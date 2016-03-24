@@ -41,25 +41,22 @@ for i=1:length(files)
         %Initialize Theta
         theta = init_gaussians(M,mfcc_data);
         
+        %Set break conditions and train
+        k = 0;
+        prev_L = -Inf;
+        improvement = Inf;
+        
+        while k<=max_iter && improvement >= epsilon
+            L = compute(theta, X);
+            %theta = update(theta, X, L);
+            improvement = L-prev_L;
+            prev_L = L;
+            k = k+1;
+        end 
+        
     end
 end
  
-i=0;
-prev_L = -Inf;
-improvement = Inf;
-theta = init_gaussians(M);
-return;
-
-while i<=max_iter && improvement >= epsilon
-    L = compute(theta, X);
-    %theta = update(theta, X, L);
-    improvement = L-prev_L;
-    prev_L = L;
-    i = i+1;
-end
-
-return;
-
 function theta = init_gaussians(M, X)
     theta = struct();
     %Set weights to 1/M for each GMM
