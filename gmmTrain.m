@@ -20,7 +20,6 @@ gmms = {};
 %initilaize theta
 files = dir(dir_train);
 count = 0;
-%I DONT KNOW HOW TO INITILIAZE WHY GAUSSIAN WHYY
 for i=1:length(files)
 
     if (strcmp(files(i).name,'.') || strcmp(files(i).name,'..'))
@@ -39,7 +38,9 @@ for i=1:length(files)
             mfcc_file = load(strcat(speaker_data_path,mfcc_files(j).name));
             mfcc_data = [mfcc_data;mfcc_file];
         end
-   
+        %Initialize Theta
+        theta = init_gaussians(M,mfcc_data);
+        
     end
 end
  
@@ -59,24 +60,22 @@ end
 
 return;
 
-function theta = init_gaussians(m, X)
+function theta = init_gaussians(M, X)
     theta = struct();
-    w = zeros(1, m);
-    cov = zeros(length(X), length(X), m);
-    mean = zeroes(length(X), m);
-    for i=1:m
-        w(i) = 1/m;
-        for j=1:length(X)
-            mean(j,i) = 0;
-            for k=1:length(X)
-                if(k==j)
-                    cov(k,j,i) = 1;
-                end
-            end
-        end
-    end
+    %Set weights to 1/M for each GMM
+    w = 1/M * ones(1, M);
+    
+    %Pick the middle value to use as initial Means
+    mean = X(size(X,1)/2,:);
+    
+    %Assume covariance is independant (all ones)
+    %DxD identity
+    A = eye(size(X,2));
+    %Span it M times
+    cov = repmat(A,1,1,M);
+
     theta.w = w;
-    theta.mean = mean;
+    theta.mean = mean; 
     theta.cov = cov;
 return;
 
