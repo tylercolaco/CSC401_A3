@@ -26,7 +26,7 @@ for i=1:length(files)
     else
         count = count + 1;
         speaker = files(i).name;
-        mfcc_data = [];
+        X = [];
         speaker_data_path = strcat(dir_train,'/',speaker,'/');
         %Create struct for each speaker
         gmms{count} = struct();
@@ -36,18 +36,54 @@ for i=1:length(files)
         mfcc_files = dir(strcat(speaker_data_path,'*.mfcc'));
         for j=1:length(mfcc_files)
             mfcc_file = load(strcat(speaker_data_path,mfcc_files(j).name));
-            mfcc_data = [mfcc_data;mfcc_file];
+            X = [X;mfcc_file];
         end
         %Initialize Theta
-        theta = init_gaussians(M,mfcc_data);
+        theta = init_gaussians(M,X);
         
         %Set break conditions and train
         k = 0;
         prev_L = -Inf;
         improvement = Inf;
+        %Log space computation
+        %log(b) = log(num) - log(den)
+        %log(num) = -1/2*sum[(data-mean)^2/cov)]
+        %log(den) = d/2*log(2pi) + 1/2*sum(covariance)
         
         while k<=max_iter && improvement >= epsilon
-            L = compute(theta, X);
+            %L = compute(theta, X);
+            %compute b in log domain
+            %T is number of data vectors
+            T = size(X,1);
+            %D is number of features per data vector
+            D = size(X,2);
+            
+            b_num = zeros(T,M);
+            
+            for j=1:D
+                
+                %mean, want it to be T x M matrix when its D x M
+                %Looping through the D element
+                %take mean(j,:) and repeat it T times
+                meansRep = repmat(theta.mean(j,:),T,1);
+                
+                %data, want it to be T x M matrix when its T x D
+                %Loop thorugh the D element
+                %X(:,j) and repeat T times
+                dataRep = repmat(X(:,j),1,T);
+                
+                %first take the difference
+                delta = dataRep - meansRep;
+                
+                %square the difference
+                delta = delta.^2;
+                
+                
+                
+            end
+
+            
+            
             %theta = update(theta, X, L);
             improvement = L-prev_L;
             prev_L = L;
@@ -63,7 +99,11 @@ function theta = init_gaussians(M, X)
     w = 1/M * ones(1, M);
     
     %Pick the middle value to use as initial Means
-    mean = X(size(X,1)/2,:);
+    middle = size(X,1)/2;
+    
+    mean = X(middle:middle+M-1,:);
+    %was MXD make it DxM
+    mean = mean';
     
     %Assume covariance is independant (all ones)
     %DxD identity
