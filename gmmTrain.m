@@ -70,7 +70,7 @@ for i=1:length(files)
                 %data, want it to be T x M matrix when its T x D
                 %Loop thorugh the D element
                 %X(:,j) and repeat T times
-                dataRep = repmat(X(:,j),1,T);
+                dataRep = repmat(X(:,j),1,M);
                 
                 %first take the difference
                 delta = dataRep - meansRep;
@@ -78,6 +78,11 @@ for i=1:length(files)
                 %square the difference
                 delta = delta.^2;
                 
+                covRep = theta.cov(j,j,:);
+                covRep = repmat(covRep,1,T,1);
+                covRep = squeeze(covRep);
+                
+                b_num = delta/covRep;
                 
                 
             end
