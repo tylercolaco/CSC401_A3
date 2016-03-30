@@ -21,7 +21,6 @@ gmms = {};
 files = dir(dir_train);
 count = 0;
 for i=1:length(files)
-
     if (strcmp(files(i).name,'.') || strcmp(files(i).name,'..'))
     else
         count = count + 1;
@@ -59,6 +58,8 @@ for i=1:length(files)
             D = size(X,2);
             
             b_num = zeros(T,M);
+            %Required for the denominator of b
+            logCovSum = zeros(T,M);
             
             for j=1:D
                 
@@ -66,7 +67,7 @@ for i=1:length(files)
                 %Looping through the D element
                 %take mean(j,:) and repeat it T times
                 meansRep = repmat(theta.mean(j,:),T,1);
-                
+                %disp(meansRep);
                 %data, want it to be T x M matrix when its T x D
                 %Loop thorugh the D element
                 %X(:,j) and repeat T times
@@ -77,25 +78,65 @@ for i=1:length(files)
                 
                 %square the difference
                 delta = delta.^2;
-                
                 covRep = theta.cov(j,j,:);
                 covRep = repmat(covRep,1,T,1);
+                %turn into 2D matrix
                 covRep = squeeze(covRep);
-                
-                b_num = delta/covRep;
-                
+                %Sum to be used for denominator of b
+                logCovSum = logCovSum + log(covRep);
+                %disp(b_num);
+                b_num = b_num + delta./covRep;
                 
             end
 
+            b_num = -1/2*b_num;
             
+            %Sum of log covariances calculated in previous D loop
+            %log(den) = d/2*log(2pi) + 1/2*sum(log(covariance))
+            b_den = ones(T,M) * D/2 * log(2*pi) + 1/2*logCovSum;
+            
+            
+            
+            b = b_num - b_den;
+            
+            L = theta.w * exp(b');
+            logL = sum(log(L),2);
+            
+            postProb_num = repmat(theta.w,T,1) .* exp(b);
+            postProb_den = repmat(sum(postProb_num,2),1,M);
+            postProb = postProb_num ./ postProb_den;
+            
+           % disp(theta.mean);
+            %Update Terms
+            sumpostProb = sum(postProb);
+            
+            %Update Weights
+            theta.w = sumpostProb / T;
+            
+            %Update Means
+            theta.mean = postProb' * X ./ repmat(sumpostProb',1,D);
+            theta.mean = theta.mean';
+            
+            %Update Covariance
+            theta.cov = postProb' * (X.^2) ./ repmat(sumpostProb',1,D);
+            theta.cov = theta.cov' - (theta.mean).^2;
+            cov = zeros(D,D,M);
+            for j =1:M
+                cov(:,:,j) = diag(theta.cov(:,j));
+            end
+            theta.cov = cov;
+
             
             %theta = update(theta, X, L);
-            improvement = L-prev_L;
-            prev_L = L;
+            improvement = logL-prev_L;
+            prev_L = logL;
             k = k+1;
         end 
-        
+        gmms{count}.weights = theta.w;
+        gmms{count}.means = theta.mean;
+        gmms{count}.cov = theta.cov;
     end
+    disp('Finished');
 end
  
 function theta = init_gaussians(M, X)
