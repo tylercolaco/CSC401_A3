@@ -61,7 +61,7 @@ for i=1:length(files)
             %Required for the denominator of b
             logCovSum = zeros(T,M);
             
-            b = computeB(M,T,D,X,theta,b_num,logCovSum);
+            b = computeB(M,X,theta);
             
             L = theta.w * exp(b');
             logL = sum(log(L),2);
@@ -125,7 +125,11 @@ function theta = init_gaussians(M, X)
     theta.cov = cov;
 return;
 
-function b = computeB(M,T,D,X,theta,b_num,logCovSum)
+function b = computeB(M,X,theta)
+
+    T = size(X,1);
+    %D is number of features per data vector
+    D = size(X,2);
     b_num = zeros(T,M);
     %Required for the denominator of b
     logCovSum = zeros(T,M);
