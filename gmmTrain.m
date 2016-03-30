@@ -61,43 +61,7 @@ for i=1:length(files)
             %Required for the denominator of b
             logCovSum = zeros(T,M);
             
-            for j=1:D
-                
-                %mean, want it to be T x M matrix when its D x M
-                %Looping through the D element
-                %take mean(j,:) and repeat it T times
-                meansRep = repmat(theta.mean(j,:),T,1);
-                %disp(meansRep);
-                %data, want it to be T x M matrix when its T x D
-                %Loop thorugh the D element
-                %X(:,j) and repeat T times
-                dataRep = repmat(X(:,j),1,M);
-                
-                %first take the difference
-                delta = dataRep - meansRep;
-                
-                %square the difference
-                delta = delta.^2;
-                covRep = theta.cov(j,j,:);
-                covRep = repmat(covRep,1,T,1);
-                %turn into 2D matrix
-                covRep = squeeze(covRep);
-                %Sum to be used for denominator of b
-                logCovSum = logCovSum + log(covRep);
-                %disp(b_num);
-                b_num = b_num + delta./covRep;
-                
-            end
-
-            b_num = -1/2*b_num;
-            
-            %Sum of log covariances calculated in previous D loop
-            %log(den) = d/2*log(2pi) + 1/2*sum(log(covariance))
-            b_den = ones(T,M) * D/2 * log(2*pi) + 1/2*logCovSum;
-            
-            
-            
-            b = b_num - b_den;
+            b = computeB(M,T,D,X,theta,b_num,logCovSum);
             
             L = theta.w * exp(b');
             logL = sum(log(L),2);
@@ -136,7 +100,6 @@ for i=1:length(files)
         gmms{count}.means = theta.mean;
         gmms{count}.cov = theta.cov;
     end
-    disp('Finished');
 end
  
 function theta = init_gaussians(M, X)
@@ -155,11 +118,56 @@ function theta = init_gaussians(M, X)
     %DxD identity
     A = eye(size(X,2));
     %Span it M times
-    cov = repmat(A,1,1,M);
+    cov = repmat(A,[1,1,M]);
 
     theta.w = w;
     theta.mean = mean; 
     theta.cov = cov;
+return;
+
+function b = computeB(M,T,D,X,theta,b_num,logCovSum)
+    b_num = zeros(T,M);
+    %Required for the denominator of b
+    logCovSum = zeros(T,M);
+
+    for j=1:D
+
+        %mean, want it to be T x M matrix when its D x M
+        %Looping through the D element
+        %take mean(j,:) and repeat it T times
+        meansRep = repmat(theta.mean(j,:),T,1);
+        %disp(meansRep);
+        %data, want it to be T x M matrix when its T x D
+        %Loop thorugh the D element
+        %X(:,j) and repeat T times
+        dataRep = repmat(X(:,j),1,M);
+
+        %first take the difference
+        delta = dataRep - meansRep;
+
+        %square the difference
+        delta = delta.^2;
+        covRep = theta.cov(j,j,:);
+        covRep = repmat(covRep,[1,T,1]);
+        %turn into 2D matrix
+        covRep = squeeze(covRep);
+        %Sum to be used for denominator of b
+        logCovSum = logCovSum + log(covRep);
+        %disp(b_num);
+        b_num = b_num + delta./covRep;
+
+    end
+
+    b_num = -1/2*b_num;
+
+    %Sum of log covariances calculated in previous D loop
+    %log(den) = d/2*log(2pi) + 1/2*sum(log(covariance))
+    b_den = ones(T,M) * D/2 * log(2*pi) + 1/2*logCovSum;
+
+
+
+    b = b_num - b_den;
+            
 return;
 
 function L = compute(theta, mfcc_data)
@@ -190,3 +198,4 @@ function L = compute(theta, mfcc_data)
     end
     return;
 return;
+
