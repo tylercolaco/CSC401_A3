@@ -12,11 +12,6 @@ test_files = files;
 
 % Get test files 
 test_names = {test_files.name};
-test_liks = zeros(1,size(test_names, 2));
-% For scoring purposes
-labels = dir(dir_train);
-top_5_cnt = 0;
-top_1_cnt = 0;
 
 % Go through all test files, find the max, and output to the appropriate file
 for i=1:size(test_names, 2)
@@ -36,24 +31,10 @@ for i=1:size(test_names, 2)
   fn = strcat('unkn_', s, '.lik');
   fileID = fopen(fn, 'w');
   for j=1:5
-      if j == 1
-	    test_liks(i) = res(j);
-      end
-      if strcmp(gmms{ind(j)}.name, labels(i+2).name)
-        top_5_cnt = top_5_cnt + 1;
-        if j == 1
-            top_1_cnt = top_1_cnt + 1;
-        end
-      end
 	  fprintf(fileID, '%2.4f\t%s\n', res(j), gmms{ind(j)}.name);
   end
   fclose('all');
 end
-% Print counts of hits in top 5 and top 1
-disp(top_1_cnt);
-disp(top_5_cnt);
-% Print the average likelihood for best match
-disp(mean(test_liks));
 result = 1;
 end
 
