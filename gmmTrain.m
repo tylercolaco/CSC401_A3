@@ -174,32 +174,5 @@ function b = computeB(M,X,theta)
             
 return;
 
-function L = compute(theta, mfcc_data)
-    d = length(mfcc_data);
-    b = zeros(M, 1);
-    for j=1:M
-        sum = 0;
-        d = length(mfcc_data);
-        for i=1:d
-            sum = sum + ((mfcc_data(i) - theta.mean(i,j))^2)/cov(i,j,j);
-        end
-        num = exp(-0.5*sum);
-        prod = eye(d);
-        for i=1:d
-            prod = prod*cov(i,j);
-        end
-        denom = ((2*pi)^(d/2))*prod^0.5;
-        b = num/denom;
-    end
-    weight_sum = 0;
-    for i=1:M
-        weight_sum = weight_sum + theta.w(i)*b;
-    end
-    
-    L = zeros(M, 1);
-    for i=1:M
-        L(i) = theta.w(i)*b/weight_sum;
-    end
-    return;
-return;
+
 
