@@ -29,9 +29,9 @@ for i=1:size(names, 2)
   s = sprintf('%s', tmp{:});
   fn = strcat('unkn_', s, '.lik');
   fileID = fopen(fn, 'w');
-  fprintf(fileID, 'Speaker ID\tlog likelihood\n');
+  fprintf(fileID, 'SpeakerID\tlog likelihood\n');
   for j=1:5
-	  fprintf(fileID, '%s\t%2.2f\n', gmms{ind(j)}.name, res(j));
+	  fprintf(fileID, '%s\t\t%2.2f\n', gmms{ind(j)}.name, res(j));
   end
   fclose('all');
 end
