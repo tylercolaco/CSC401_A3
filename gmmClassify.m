@@ -11,7 +11,8 @@ gmms = theta;
 
 % Get names of files 
 names = {files.name};
-
+labels = {'MMRP0', 'MPGH0', 'MKLW0', 'FSAH0', 'FVFB0', 'FJSP0', 'MTPF0', 'MRDD0', 'MRSO0', 'MKLS0', 'FETB0','FMEM0','FCJF0','MWAR0','MTJS0'};
+correct = 0;
 % Loop through all test, find top 5 highest likelihoods
 for i=1:size(names, 2)
   % Load files
@@ -27,6 +28,14 @@ for i=1:size(names, 2)
   %get test number and convert to string
   tmp = regexp(names{i},'[\d]+', 'match');
   s = sprintf('%s', tmp{:});
+  spknum = str2num(s);
+  if(spknum<16)
+      lab = labels(spknum);
+      str_lab = sprintf('%s', lab{:});
+      if(strcmp(str_lab,gmms{ind(1)}.name))
+          correct = correct + 1;
+      end
+  end
   fn = strcat('unkn_', s, '.lik');
   fileID = fopen(fn, 'w');
   fprintf(fileID, 'SpeakerID\tlog likelihood\n');
@@ -35,7 +44,7 @@ for i=1:size(names, 2)
   end
   fclose('all');
 end
-result = 1;
+result = correct/15;
 end
 
 function ll = computeLl(M,X,theta)
