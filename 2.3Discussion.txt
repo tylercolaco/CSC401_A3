@@ -1,0 +1,23 @@
+1. How might you improve the classification accuracy of the Gaussian mixtures, without adding more
+training data?
+
+Without adding more data, the classification accuracy can be improved by either increasing M (the number of Gaussians),
+or increasing the number of max iterations/decreasing epsilon. Increasing the number of Gaussians lets the model train 
+on more features of the speech patterns. However, too many Gaussians can lead to overfitting problems. Increasing the 
+number of max iterations/decreasing epsilon will give better means and variances for the Gaussians since the EM algorithm 
+can be run longer. 
+
+2. When would your classifer decide that a given test utterance comes from none of the trained speaker
+models, and how would your classifer come to this decision?
+
+The classifier would decide that a test utterance came from none of the trained speaker models if the given test utterance 
+does not fall in any of the 8 Gaussians of any of the 30 trained speaker models. 
+
+Maybe can't?
+
+3. Can you think of some alternative methods for doing speaker identification that don't use Gaussian
+mixtures?
+
+Since each speech pattern is just a 14 dimensional vector, the K nearest neighbours algorithm can be used to to set a 
+mean for each of the 30 training sets. Then, for each test utterance, the speech pattern with the closest Euclidean distance
+would be selected. 
