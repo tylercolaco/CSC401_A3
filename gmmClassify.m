@@ -3,35 +3,35 @@ files = dir(strcat(dir_test,'/*.mfcc'));
 
 %to get each data file load
 M = 8;
-eps = 0.1;
+epsilon = 0.1;
 % Get trained models
-%gmms = gmmTrain(dir_train, 100, eps, M);
+%gmms = gmmTrain(dir_train, 100, epsilon, M);
 gmms = theta;
-%test_files = dir('/u/cs401/speechdata/Testing/unkn_*.mfcc');
-test_files = files;
+%files = dir('/u/cs401/speechdata/Testing/unkn_*.mfcc');
 
-% Get test files 
-test_names = {test_files.name};
+% Get names of files 
+names = {files.name};
 
-% Go through all test files, find the max, and output to the appropriate file
-for i=1:size(test_names, 2)
+% Loop through all test, find top 5 highest likelihoods
+for i=1:size(names, 2)
   % Load files
-  test_mfcc = load(strcat(dir_test, '/', test_names{i}));
-  % Get each likelihood
-  liks = zeros(1,size(gmms,2));
+  test_mfcc = load(strcat(dir_test, '/', names{i}));
+  % Get log likelihoods
+  likelihoods = zeros(1,size(gmms,2));
   for j=1:size(gmms,2)
 	ll = computeLl(M, test_mfcc, gmms{j});
-	liks(j) = ll;
+	likelihoods(j) = ll;
   end
-  % Find top hits, print to file
-  [res, ind] = sortrows(liks', -1);
+  % print top 5 to file
+  [res, ind] = sortrows(likelihoods', -1);
   %get test number and convert to string
-  tmp = regexp(test_names{i},'[\d]+', 'match');
+  tmp = regexp(names{i},'[\d]+', 'match');
   s = sprintf('%s', tmp{:});
   fn = strcat('unkn_', s, '.lik');
   fileID = fopen(fn, 'w');
+  fprintf(fileID, 'Speaker ID\tlog likelihood\n');
   for j=1:5
-	  fprintf(fileID, '%2.4f\t%s\n', res(j), gmms{ind(j)}.name);
+	  fprintf(fileID, '%s\t%2.2f\n', gmms{ind(j)}.name, res(j));
   end
   fclose('all');
 end
