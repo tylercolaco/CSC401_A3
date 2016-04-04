@@ -86,7 +86,7 @@ function ll = computeLl(M,X,theta)
     b = b_num - b_den;
     % Compute log likelihood
     wb = theta.weights * exp(b)';
-    ll = sum(log(wb), 2) / T;
+    ll = sum(log(wb), 2);
             
 return;
 end
