@@ -68,7 +68,7 @@ for i=1:numel(fields)
   hmmsAfterTrain.(fields{i}) = trainHMM(hmms.(fields{i}), data.(fields{i}));
 end
 
-save(hmmsAfterTrain, 'hmms', '-mat'); 
+save('hmms.mat', 'hmmsAfterTrain');
 
 %next go through each test sequence and determine log likelihood.
 
