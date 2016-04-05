@@ -32,11 +32,9 @@ for i=1:length(files)
                 strt = str2num(arr{k*3-2})/128+1;
                 finish = str2num(arr{k*3-1})/128+1;
                 toadd = [];
-                ctr = 0;
                 for row=strt:finish
                     if(row < length(X))
-                        ctr = ctr + 1;
-                        toadd = [toadd X(row,:)];
+                        toadd = [toadd X(row,:)'];
                     end
                 end
                 if(strcmp(arr(k*3),'h#'))
