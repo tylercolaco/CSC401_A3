@@ -2,11 +2,11 @@ function result = gmmClassify(dir_test, dir_train, theta)
 files = dir(strcat(dir_test,'/*.mfcc'));
 
 %to get each data file load
-M = 8;
+M = 6;
 epsilon = 0.1;
 % Get trained models
-%gmms = gmmTrain(dir_train, 100, epsilon, M);
-gmms = theta;
+gmms = gmmTrain(dir_train, 100, epsilon, M);
+%gmms = theta;
 %files = dir('/u/cs401/speechdata/Testing/unkn_*.mfcc');
 
 % Get names of files 
