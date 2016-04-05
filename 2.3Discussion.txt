@@ -1,3 +1,7 @@
+As the number of components decreases so does the accuracy.
+
+
+
 1. How might you improve the classification accuracy of the Gaussian mixtures, without adding more
 training data?
 

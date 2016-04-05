@@ -9,8 +9,9 @@ hmms = struct();
 max_ll = -1000; %something largely negative
 correct = 0;
 incorrect = 0;
+dim = 14; %try 3 and 7
 fields = fieldnames(hmmsAfterTrain);
-for i=7:length(files)
+for i=1:length(files)
     if (strcmp(files(i).name,'.') || strcmp(files(i).name,'..'))
     else
         X = load(strcat(dir_test, '/', mfccfiles(i).name));
@@ -28,7 +29,7 @@ for i=7:length(files)
             tocompare = [];
             for row=strt:finish
                 if(row < length(X))
-                    tocompare = [tocompare X(row,:)'];
+                    tocompare = [tocompare X(row,1:dim)'];
                 end
             end
             ll = zeros(numel(fields),1);
