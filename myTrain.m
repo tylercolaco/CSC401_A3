@@ -7,10 +7,9 @@ data = struct();
 hmms = struct();
 hmmsAfterTrain = struct();
 dim = 14; %try 3 and 7
-training_data = 30; %try 10 and 15
+training_data = 32; %try 12 and 17
 states = 3; %try 1 and 2
 num_gauss = 8; %try 2 and 4
-
 for i=1:training_data
     if (strcmp(files(i).name,'.') || strcmp(files(i).name,'..'))
     else
@@ -35,12 +34,12 @@ for i=1:training_data
                 finish = str2num(arr{k*3-1})/128+1;
                 toadd = [];
                 for row=strt:finish
-                    if(row < length(X))
+                    if(row < (length(X)+1))
                         toadd = [toadd X(row,1:dim)'];
                     end
                 end
                 if(~isempty(toadd))
-                    if(strcmp(arr{k*3},'h#'))
+                    if(strcmp(arr(k*3),'h#'))
                         %check if field already
                         if(isfield(data, 'sil'))
                             data.('sil'){length(data.('sil'))+1} = toadd;
@@ -76,7 +75,7 @@ for i=1:numel(fields)
   hmmsAfterTrain.(fields{i}) = trainHMM(hmms.(fields{i}), data.(fields{i}));
 end
 
-fn = sprintf('%dgauss%ddim%dtraining%dstateshmm.mat', num_gauss,dim,train_data,states);
+fn = sprintf('%dgauss%ddim%dtraining%dstateshmm.mat', num_gauss,dim,training_data,states);
 save(fn, 'hmmsAfterTrain');
 
 %next go through each test sequence and determine log likelihood.
