@@ -39,19 +39,21 @@ for i=1:training_data
                         toadd = [toadd X(row,1:dim)'];
                     end
                 end
-                if(strcmp(arr(k*3),'h#'))
-                    %check if field already
-                    if(isfield(data, 'sil'))
-                        data.('sil'){length(data.('sil'))+1} = toadd;
-                    else 
-                        data.('sil'){1} = toadd;
-                    end
-                else
-                    %check if field already
-                    if(isfield(data, arr{k*3}))
-                        data.(arr{k*3}){length(data.(arr{k*3}))+1} = toadd;
-                    else 
-                        data.(arr{k*3}){1} = toadd;
+                if(~isempty(toadd))
+                    if(strcmp(arr{k*3},'h#'))
+                        %check if field already
+                        if(isfield(data, 'sil'))
+                            data.('sil'){length(data.('sil'))+1} = toadd;
+                        else 
+                            data.('sil'){1} = toadd;
+                        end
+                    else
+                        %check if field already
+                        if(isfield(data, arr{k*3}))
+                            data.(arr{k*3}){length(data.(arr{k*3}))+1} = toadd;
+                        else 
+                            data.(arr{k*3}){1} = toadd;
+                        end
                     end
                 end
             end
@@ -69,7 +71,7 @@ for i=1:numel(fields)
   %init the HMM given the data
   %can use 4 gaussians for all train data
   disp(fields{i});
-  hmms.(fields{i}) = initHMM(data.(fields{i}), num_gauss, states);
+  hmms.(fields{i}) = initHMM(data.(fields{i}));
   %train the HMM given the data for each phoneme
   hmmsAfterTrain.(fields{i}) = trainHMM(hmms.(fields{i}), data.(fields{i}));
 end
