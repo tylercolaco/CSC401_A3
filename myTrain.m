@@ -11,7 +11,7 @@ phn_files = dir(strcat(speaker_data_path,'*.phn'));
 mfcc_files = dir(strcat(speaker_data_path,'*.mfcc'));
 %jsut go through 3 files for now
 %for i=1:length(files)
-for i=1:3
+for i=1:length(files)
     if (strcmp(files(i).name,'.') || strcmp(files(i).name,'..'))
     else
         count = count + 1;
@@ -21,7 +21,7 @@ for i=1:3
         mfcc_files = dir(strcat(speaker_data_path,'*.mfcc'));
         %Get the phn files from directories (used to train gausians)
 
-        for j=1:4%length(phn_files)
+        for j=1:length(phn_files)
             X = load(strcat(speaker_data_path,mfcc_files(j).name));
             fidphn = fopen(strcat(speaker_data_path,phn_files(j).name));
             disp(phn_files(j).name);
