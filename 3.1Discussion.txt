@@ -1,0 +1,1 @@
+The final phoneme accuracy was found to be 45.16% (494/1094) phonemes
