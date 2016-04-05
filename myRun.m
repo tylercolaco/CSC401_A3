@@ -26,12 +26,12 @@ for i=1:2
         for k=1:length(arr)/3
             strt = str2num(arr{k*3-2})/128+1;
             finish = str2num(arr{k*3-1})/128-1;
-            tocompare = zeros(14,finish-strt+1);
+            tocompare = [];
             ctr = 0;
             for row=strt:finish
                 if(row < length(X))
                     ctr = ctr + 1;
-                    tocompare(:,ctr) = X(row,:);
+                    tocompare = [tocompare X(row,:)];
                 end
             end
             max_ll = -1000;
