@@ -28,7 +28,7 @@ for i=1:length(files)
             finish = str2num(arr{k*3-1})/128+1;
             tocompare = [];
             for row=strt:finish
-                if(row < length(X))
+                if(row < length(X)+1)
                     tocompare = [tocompare X(row,1:dim)'];
                 end
             end
