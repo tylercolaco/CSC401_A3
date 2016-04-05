@@ -14,12 +14,19 @@ for i=1:2
         
         count = {};
         speaker = files(i).name;
+        X = [];
         
         fid = fopen(strcat(dir_test, '/', files(i).name));
         chr = fscanf(fid,'%c');
         tmp = textscan(chr, '%s');
         arr = tmp{1};
-        disp(arr);
+        fclose(fid);
+        
+        mfcc_files = dir(strcat(speaker_data_path,'*.mfcc'));
+        for j=1:length(mfcc_files)
+            mfcc_file = load(strcat(speaker_data_path,mfcc_files(j).name));
+            X = [X;mfcc_file];
+        end
         
         fields = fieldnames(hmmsAfterTrain);
 
@@ -45,29 +52,6 @@ for i=1:2
                 incorrect = incorrect + 1;
             end
         end
-        
-        
-%         fn = strcat('PHNunkn_', speaker, '.lik');
-%         fileID = fopen(fn, 'w');
-%         fid = fopen(fileID);
-%         
-%         for k=1:(length(arr)/3)
-%             if(strcmp(arr(k*3),'h#'))
-%                 %check if field already
-%                 if(isfield(hmms, 'sil'))
-%                     hmms.('sil'){1} = [hmms.('sil'){1}, [str2num(arr{k*3-2}), str2num(arr{k*3-1})]];
-%                 else 
-%                     hmms.('sil') = {[str2num(arr{k*3-2}), str2num(arr{k*3-1})]};
-%                 end
-%             else
-%                 if(isfield(hmms, arr{k*3}))
-%                     hmms.(arr{k*3}){1} = [hmms.(arr{k*3}){1}, [str2num(arr{k*3-2}), str2num(arr{k*3-1})]];
-%                 else 
-%                     hmms.(arr{k*3}) = {[str2num(arr{k*3-2}), str2num(arr{k*3-1})]};
-%                 end
-%             end
-%         end
-        fclose(fid);
     end
 end
 
