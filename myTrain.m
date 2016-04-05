@@ -6,12 +6,11 @@ count = 0;
 data = struct();
 hmms = struct();
 hmmsAfterTrain = struct();
-dim = 14;
-training_data = 30;
-states = 3;
-num_gauss = 8;
+dim = 14; %try 3 and 7
+training_data = 30; %try 10 and 15
+states = 3; %try 1 and 2
+num_gauss = 8; %try 2 and 4
 
-%for i=1:length(files)
 for i=1:training_data
     if (strcmp(files(i).name,'.') || strcmp(files(i).name,'..'))
     else
