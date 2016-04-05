@@ -30,10 +30,14 @@ for i=1:length(files)
             arr = tmp{1};
             for k=1:(length(arr)/3)
                 strt = str2num(arr{k*3-2})/128+1;
-                finish = str2num(arr{k*3-1})/128-1;
-                toadd = [];
+                finish = str2num(arr{k*3-1})/128+1;
+                toadd = zeros(14,finish-strt+1);
+                ctr = 0;
                 for row=strt:finish
-                    toadd = [toadd X(row,:)'];
+                    if(row < length(X))
+                        ctr = ctr + 1;
+                        toadd(:,ctr) = X(row,:);
+                    end
                 end
                 if(strcmp(arr(k*3),'h#'))
                     %check if field already
@@ -60,9 +64,11 @@ end
 %init hmms for each phoneme
 fields = fieldnames(data);
 
-for i=1:numel(fields)
+disp(numel(fields));
+for i=6:numel(fields)
   %init the HMM given the data
   %can use 4 gaussians for all train data
+  disp(fields{i});
   hmms.(fields{i}) = initHMM(data.(fields{i}));
   %train the HMM given the data for each phoneme
   hmmsAfterTrain.(fields{i}) = trainHMM(hmms.(fields{i}), data.(fields{i}));

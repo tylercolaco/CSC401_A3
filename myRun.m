@@ -26,29 +26,35 @@ for i=1:2
         for k=1:length(arr)/3
             strt = str2num(arr{k*3-2})/128+1;
             finish = str2num(arr{k*3-1})/128-1;
+            tocompare = zeros(14,finish-strt+1);
+            ctr = 0;
             for row=strt:finish
-                max_ll = -1000;
-                for j=1:numel(fields)
-                    ll = loglikHMM(hmmsAfterTrain.(fields{j}), X(row,:));
-                    if(ll > max_ll)
-                        %disp(guess);
-                        %disp(fields{i});
-                        %disp(ll);
-                        max_ll = ll;
-                        guess = fields{j};
-                    end
+                if(row < length(X))
+                    ctr = ctr + 1;
+                    tocompare(:,ctr) = X(row,:);
                 end
-                if(strcmp(guess, 'sil'))
-                    guess = 'h#';
+            end
+            max_ll = -1000;
+            for j=1:numel(fields)
+                ll = loglikHMM(hmmsAfterTrain.(fields{j}), tocompare);
+                if(ll > max_ll)
+                    %disp(guess);
+                    %disp(fields{i});
+                    %disp(ll);
+                    max_ll = ll;
+                    guess = fields{j};
                 end
-                disp(guess);
-                disp(arr{k*3});
-                disp(strcmp(guess, arr{k*3}));
-                if(strcmp(guess, arr{k*3}))
-                    correct = correct + 1;
-                else
-                    incorrect = incorrect + 1;
-                end
+            end
+            if(strcmp(guess, 'sil'))
+                guess = 'h#';
+            end
+            disp(guess);
+            disp(arr{k*3});
+            disp(strcmp(guess, arr{k*3}));
+            if(strcmp(guess, arr{k*3}))
+                correct = correct + 1;
+            else
+                incorrect = incorrect + 1;
             end
         end
     end
