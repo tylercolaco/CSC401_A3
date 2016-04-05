@@ -43,7 +43,7 @@ for i=1:length(files)
                 else
                     for row=strt:finish
                         %check if field already
-                        if(isfield(data, arr(k*3)))
+                        if(isfield(data, arr{k*3}))
                             data.(arr{k*3}){length(data.(arr{k*3}))+1} = X(row,:);
                         else 
                             data.(arr{k*3}){1} = X(row,:);
