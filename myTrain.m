@@ -36,20 +36,18 @@ for i=1:length(files)
                     toadd = [toadd X(row,:)'];
                 end
                 if(strcmp(arr(k*3),'h#'))
-                        %check if field already
-                        if(isfield(data, 'sil'))
-                            data.('sil'){length(data.('sil'))+1} = toadd;
-                        else 
-                            data.('sil'){1} = toadd;
-                        end
+                    %check if field already
+                    if(isfield(data, 'sil'))
+                        data.('sil'){length(data.('sil'))+1} = toadd;
+                    else 
+                        data.('sil'){1} = toadd;
+                    end
                 else
-                    for row=strt:finish
-                        %check if field already
-                        if(isfield(data, arr{k*3}))
-                            data.(arr{k*3}){length(data.(arr{k*3}))+1} = toadd;
-                        else 
-                            data.(arr{k*3}){1} = toadd;
-                        end
+                    %check if field already
+                    if(isfield(data, arr{k*3}))
+                        data.(arr{k*3}){length(data.(arr{k*3}))+1} = toadd;
+                    else 
+                        data.(arr{k*3}){1} = toadd;
                     end
                 end
             end
