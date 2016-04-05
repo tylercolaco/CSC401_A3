@@ -33,7 +33,6 @@ for i=1:length(files)
                 finish = str2num(arr{k*3-1})/128-1;
                 if(strcmp(arr(k*3),'h#'))
                     for row=strt:finish
-                        disp(row);
                         %check if field already
                         if(isfield(data, 'sil'))
                             data.('sil'){length(data.('sil'))+1} = X(row,:);
@@ -43,7 +42,6 @@ for i=1:length(files)
                     end
                 else
                     for row=strt:finish
-                        disp(row);
                         %check if field already
                         if(isfield(data, arr(k*3)))
                             data.(arr{k*3}){length(data.(arr{k*3}))+1} = X(row,:);
