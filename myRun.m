@@ -10,14 +10,13 @@ max_ll = -1000; %something largely negative
 correct = 0;
 incorrect = 0;
 fields = fieldnames(hmmsAfterTrain);
-%for i=1:length(files)
-for i=1:2
+for i=7:length(files)
     if (strcmp(files(i).name,'.') || strcmp(files(i).name,'..'))
     else
-        X = load(strcat(dir_test, '/', mfcc_files(i).name));
+        X = load(strcat(dir_test, '/', mfccfiles(i).name));
         fid = fopen(strcat(dir_test, '/', files(i).name));
-        disp(phn_files(i).name);
-        disp(mfcc_files(i).name);
+        disp(files(i).name);
+        disp(mfccfiles(i).name);
         chr = fscanf(fid,'%c');
         tmp = textscan(chr, '%s');
         arr = tmp{1};
@@ -25,24 +24,21 @@ for i=1:2
 
         for k=1:length(arr)/3
             strt = str2num(arr{k*3-2})/128+1;
-            finish = str2num(arr{k*3-1})/128-1;
+            finish = str2num(arr{k*3-1})/128+1;
             tocompare = [];
             for row=strt:finish
                 if(row < length(X))
                     tocompare = [tocompare X(row,:)'];
                 end
             end
-            max_ll = -1000;
+            ll = zeros(numel(fields),1);
             for j=1:numel(fields)
-                ll = loglikHMM(hmmsAfterTrain.(fields{j}), tocompare);
-                if(ll > max_ll)
-                    %disp(guess);
-                    %disp(fields{i});
-                    %disp(ll);
-                    max_ll = ll;
-                    guess = fields{j};
-                end
+                ll(j) = loglikHMM(hmmsAfterTrain.(fields{j}), tocompare);
             end
+            [res, ind] = sortrows(ll, -1);
+            %find highest ll
+            guess = fields{ind(1)};
+        
             if(strcmp(guess, 'sil'))
                 guess = 'h#';
             end
@@ -58,4 +54,4 @@ for i=1:2
     end
 end
 
-disp(correct/incorrect+correct);
+disp(correct/(incorrect+correct));

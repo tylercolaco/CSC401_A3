@@ -6,10 +6,13 @@ count = 0;
 data = struct();
 hmms = struct();
 hmmsAfterTrain = struct();
+dim = 14;
+training_data = 30;
+states = 3;
+num_gauss = 8;
 
-%jsut go through 3 files for now
 %for i=1:length(files)
-for i=1:length(files)
+for i=1:training_data
     if (strcmp(files(i).name,'.') || strcmp(files(i).name,'..'))
     else
         count = count + 1;
@@ -34,7 +37,7 @@ for i=1:length(files)
                 toadd = [];
                 for row=strt:finish
                     if(row < length(X))
-                        toadd = [toadd X(row,:)'];
+                        toadd = [toadd X(row,1:dim)'];
                     end
                 end
                 if(strcmp(arr(k*3),'h#'))
@@ -67,12 +70,13 @@ for i=6:numel(fields)
   %init the HMM given the data
   %can use 4 gaussians for all train data
   disp(fields{i});
-  hmms.(fields{i}) = initHMM(data.(fields{i}));
+  hmms.(fields{i}) = initHMM(data.(fields{i}), num_gauss, states);
   %train the HMM given the data for each phoneme
   hmmsAfterTrain.(fields{i}) = trainHMM(hmms.(fields{i}), data.(fields{i}));
 end
 
-save('hmms.mat', 'hmmsAfterTrain');
+fn = sprintf('%dgauss%ddim%dtraining%dstateshmm.mat', num_gauss,dim,train_data,states);
+save(fn, 'hmmsAfterTrain');
 
 %next go through each test sequence and determine log likelihood.
 
