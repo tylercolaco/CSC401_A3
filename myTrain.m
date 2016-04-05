@@ -65,7 +65,7 @@ end
 fields = fieldnames(data);
 
 disp(numel(fields));
-for i=6:numel(fields)
+for i=1:numel(fields)
   %init the HMM given the data
   %can use 4 gaussians for all train data
   disp(fields{i});
