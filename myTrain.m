@@ -31,22 +31,24 @@ for i=1:length(files)
             for k=1:(length(arr)/3)
                 strt = str2num(arr{k*3-2})/128+1;
                 finish = str2num(arr{k*3-1})/128-1;
+                toadd = [];
+                for row=strt:finish
+                    toadd = [toadd X(row,:)'];
+                end
                 if(strcmp(arr(k*3),'h#'))
-                    for row=strt:finish
                         %check if field already
                         if(isfield(data, 'sil'))
-                            data.('sil'){length(data.('sil'))+1} = X(row,:);
+                            data.('sil'){length(data.('sil'))+1} = toadd;
                         else 
-                            data.('sil'){1} = X(row,:);
+                            data.('sil'){1} = toadd;
                         end
-                    end
                 else
                     for row=strt:finish
                         %check if field already
                         if(isfield(data, arr{k*3}))
-                            data.(arr{k*3}){length(data.(arr{k*3}))+1} = X(row,:);
+                            data.(arr{k*3}){length(data.(arr{k*3}))+1} = toadd;
                         else 
-                            data.(arr{k*3}){1} = X(row,:);
+                            data.(arr{k*3}){1} = toadd;
                         end
                     end
                 end
