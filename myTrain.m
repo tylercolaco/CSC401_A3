@@ -71,7 +71,7 @@ for i=1:numel(fields)
   %init the HMM given the data
   %can use 4 gaussians for all train data
   disp(fields{i});
-  hmms.(fields{i}) = initHMM(data.(fields{i}));
+  hmms.(fields{i}) = initHMM(data.(fields{i}),num_gauss, states);
   %train the HMM given the data for each phoneme
   hmmsAfterTrain.(fields{i}) = trainHMM(hmms.(fields{i}), data.(fields{i}));
 end
