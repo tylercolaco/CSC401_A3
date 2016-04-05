@@ -6,9 +6,7 @@ count = 0;
 data = struct();
 hmms = struct();
 hmmsAfterTrain = struct();
-speaker_data_path = strcat(dir_train,'/',speaker,'/');
-phn_files = dir(strcat(speaker_data_path,'*.phn'));
-mfcc_files = dir(strcat(speaker_data_path,'*.mfcc'));
+
 %jsut go through 3 files for now
 %for i=1:length(files)
 for i=1:length(files)
