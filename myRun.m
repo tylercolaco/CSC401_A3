@@ -9,7 +9,8 @@ hmms = struct();
 max_ll = -1000; %something largely negative
 correct = 0;
 incorrect = 0;
-dim = 14; %try 3 and 7
+%dim = 7; %should be defined already by myTrain
+dim = hmmsAfterTrain.sil.node_sizes_slice(3);
 fields = fieldnames(hmmsAfterTrain);
 for i=1:length(files)
     if (strcmp(files(i).name,'.') || strcmp(files(i).name,'..'))
@@ -53,6 +54,6 @@ for i=1:length(files)
             end
         end
     end
+    disp(correct/(incorrect+correct));
 end
-
 disp(correct/(incorrect+correct));
