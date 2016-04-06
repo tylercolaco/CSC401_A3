@@ -1,0 +1,2 @@
+# of Gaussians	# of dimensions	# of speakers 	# of states 	classification rate
+2		3		10		1		%18.43	(202/1096)
