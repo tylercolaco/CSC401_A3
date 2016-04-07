@@ -1,1 +1,1 @@
-[SE, IE, DE, LEV_DIST] = Levenshtein('Testing/hypotheses.txt','Testing/');
+[SE, IE, DE, LEV_DIST] = Levenshtein('Testing/hypotheses.txt','Testing');
