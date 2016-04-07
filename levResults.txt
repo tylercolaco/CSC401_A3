@@ -1,4 +1,4 @@
-ne No: 1
+Line No: 1
 SE = 0.16667
 IE = 0
 DE = 0
@@ -14,8 +14,8 @@ IE = 0
 DE = 0
 Total Error = 0
 Line No: 4
-SE = 0.22222
-IE = 0
+SE = 0.11111
+IE = 0.11111
 DE = 0
 Total Error = 0.22222
 Line No: 5
@@ -34,8 +34,8 @@ IE = 0
 DE = 0.076923
 Total Error = 0.23077
 Line No: 8
-SE = 0.3
-IE = 0.1
+SE = 0.2
+IE = 0.2
 DE = 0.1
 Total Error = 0.5
 Line No: 9
@@ -54,8 +54,8 @@ IE = 0
 DE = 0
 Total Error = 0.16667
 Line No: 12
-SE = 0.5
-IE = 0
+SE = 0.375
+IE = 0.125
 DE = 0
 Total Error = 0.5
 Line No: 13
@@ -64,8 +64,8 @@ IE = 0
 DE = 0.2
 Total Error = 0.3
 Line No: 14
-SE = 0.14286
-IE = 0
+SE = 0
+IE = 0.14286
 DE = 0
 Total Error = 0.14286
 Line No: 15
@@ -84,8 +84,8 @@ IE = 0
 DE = 0
 Total Error = 0.27273
 Line No: 18
-SE = 0.18182
-IE = 0
+SE = 0.090909
+IE = 0.090909
 DE = 0.090909
 Total Error = 0.27273
 Line No: 19
@@ -104,8 +104,8 @@ IE = 0
 DE = 0
 Total Error = 0
 Line No: 22
-SE = 0.33333
-IE = 0
+SE = 0.22222
+IE = 0.11111
 DE = 0
 Total Error = 0.33333
 Line No: 23
@@ -129,9 +129,9 @@ IE = 0
 DE = 0
 Total Error = 0.16667
 Line No: 27
-SE = 0.16667
-IE = 0.16667
-DE = 0.16667
+SE = 0.5
+IE = 0
+DE = 0
 Total Error = 0.5
 Line No: 28
 SE = 0.1
@@ -139,8 +139,8 @@ IE = 0
 DE = 0.1
 Total Error = 0.2
 Line No: 29
-SE = 0.63636
-IE = 0.090909
+SE = 0.45455
+IE = 0.27273
 DE = 0
 Total Error = 0.72727
 Line No: 30
@@ -148,7 +148,7 @@ SE = 0.33333
 IE = 0
 DE = 0
 Total Error = 0.33333
-Total SE: 0.19615
-Total IE: 0.011538
-Total DE: 0.05
+Total SE: 0.17308
+Total IE: 0.038462
+Total DE: 0.046154
 Total Error: 0.25769
