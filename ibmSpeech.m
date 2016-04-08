@@ -5,6 +5,9 @@ url = 'https://stream.watsonplatform.net/speech-to-text/api/v1/recognize?continu
 fn_speechToText = '4.1translations.txt';
 fn_textToSpeech = '4.2translations.txt';
 
+%add code folder to path
+addpath(genpath('/u/cs401/A3_ASR/code'));
+
 % test = strsplit('transcript',result);
 % test = char(test(2));
 % test = strsplit('}',test);

@@ -2,6 +2,9 @@ dir_train = '/u/cs401/speechdata/Training';
 %dir_train = 'Training';
 files = dir(dir_train);
 
+%add code folder to path
+addpath(genpath('/u/cs401/A3_ASR/code'));
+
 count = 0;
 data = struct();
 hmms = struct();

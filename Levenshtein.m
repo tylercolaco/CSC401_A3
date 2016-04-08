@@ -9,6 +9,8 @@ function [SE, IE, DE, LEV_DIST] =Levenshtein(hypothesis,annotation_dir)
 %	DE: proportion of deletion errors over all the hypotheses
 %	LEV_DIST: proportion of overall error in all hypotheses
 
+%add code folder to path
+addpath(genpath('/u/cs401/A3_ASR/code'));
 
 %Load the hypothesis
 hyp = fopen(hypothesis);

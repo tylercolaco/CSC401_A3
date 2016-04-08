@@ -1,5 +1,9 @@
 dir_test = '/u/cs401/speechdata/Testing';
 %dir_test = 'Testing';
+
+%add code folder to path
+addpath(genpath('/u/cs401/A3_ASR/code'));
+
 files = dir(strcat(dir_test,'/*.phn'));
 mfccfiles = dir(strcat(dir_test,'/*.mfcc'));
 names = {files.name};
