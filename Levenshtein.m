@@ -99,12 +99,12 @@ REF_LEN_SUM = 0;
         end
         %Print out for each line
         
-%         disp(['Line No: ' num2str(lineNo)]);
-%         disp(['SE = ' num2str(tempSub/n)]);
-%         disp(['IE = ' num2str(tempIns/n)]);
-%         disp(['DE = ' num2str(tempDel/n)]);
-%         total = (tempSub+tempIns+tempDel)/n;
-%         disp(['Total Error = ' num2str(total)]);
+        disp(['Line No: ' num2str(lineNo)]);
+        disp(['SE = ' num2str(tempSub/n)]);
+        disp(['IE = ' num2str(tempIns/n)]);
+        disp(['DE = ' num2str(tempDel/n)]);
+        total = (tempSub+tempIns+tempDel)/n;
+        disp(['Total Error = ' num2str(total)]);
         SE = SE + tempSub;
         IE = IE + tempIns;
         DE = DE + tempDel;
@@ -118,9 +118,9 @@ REF_LEN_SUM = 0;
     DE = DE/REF_LEN_SUM;
     LEV_DIST = SE + IE +DE;
     
-%     disp(['Total SE: ' num2str(SE)]);
-%     disp(['Total IE: ' num2str(IE)]);
-%     disp(['Total DE: ' num2str(DE)]);
-%     disp(['Total Error: ' num2str(LEV_DIST)]);
+    disp(['Total SE: ' num2str(SE)]);
+    disp(['Total IE: ' num2str(IE)]);
+    disp(['Total DE: ' num2str(DE)]);
+    disp(['Total Error: ' num2str(LEV_DIST)]);
 
 return

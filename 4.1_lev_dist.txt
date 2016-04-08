@@ -1,0 +1,154 @@
+Line No: 1
+SE = 0
+IE = 0
+DE = 0
+Total Error = 0
+Line No: 2
+SE = 0.125
+IE = 0
+DE = 0.125
+Total Error = 0.25
+Line No: 3
+SE = 0
+IE = 0
+DE = 0
+Total Error = 0
+Line No: 4
+SE = 0.11111
+IE = 0.11111
+DE = 0
+Total Error = 0.22222
+Line No: 5
+SE = 0.46154
+IE = 0
+DE = 0
+Total Error = 0.46154
+Line No: 6
+SE = 0
+IE = 0
+DE = 0
+Total Error = 0
+Line No: 7
+SE = 0
+IE = 0
+DE = 0.076923
+Total Error = 0.076923
+Line No: 8
+SE = 0.5
+IE = 0
+DE = 0.1
+Total Error = 0.6
+Line No: 9
+SE = 0
+IE = 0
+DE = 0
+Total Error = 0
+Line No: 10
+SE = 0.2
+IE = 0
+DE = 0
+Total Error = 0.2
+Line No: 11
+SE = 0.16667
+IE = 0
+DE = 0
+Total Error = 0.16667
+Line No: 12
+SE = 0.125
+IE = 0
+DE = 0
+Total Error = 0.125
+Line No: 13
+SE = 0.1
+IE = 0
+DE = 0.2
+Total Error = 0.3
+Line No: 14
+SE = 0.14286
+IE = 0
+DE = 0.14286
+Total Error = 0.28571
+Line No: 15
+SE = 0.28571
+IE = 0.14286
+DE = 0
+Total Error = 0.42857
+Line No: 16
+SE = 0.2
+IE = 0
+DE = 0
+Total Error = 0.2
+Line No: 17
+SE = 0.18182
+IE = 0
+DE = 0
+Total Error = 0.18182
+Line No: 18
+SE = 0.18182
+IE = 0
+DE = 0
+Total Error = 0.18182
+Line No: 19
+SE = 0.3
+IE = 0.1
+DE = 0.1
+Total Error = 0.5
+Line No: 20
+SE = 0.28571
+IE = 0
+DE = 0
+Total Error = 0.28571
+Line No: 21
+SE = 0
+IE = 0
+DE = 0
+Total Error = 0
+Line No: 22
+SE = 0
+IE = 0
+DE = 0
+Total Error = 0
+Line No: 23
+SE = 0.090909
+IE = 0
+DE = 0.090909
+Total Error = 0.18182
+Line No: 24
+SE = 0
+IE = 0
+DE = 0
+Total Error = 0
+Line No: 25
+SE = 0.2
+IE = 0
+DE = 0
+Total Error = 0.2
+Line No: 26
+SE = 0
+IE = 0
+DE = 0
+Total Error = 0
+Line No: 27
+SE = 0.16667
+IE = 0
+DE = 0
+Total Error = 0.16667
+Line No: 28
+SE = 0
+IE = 0
+DE = 0
+Total Error = 0
+Line No: 29
+SE = 0.18182
+IE = 0
+DE = 0
+Total Error = 0.18182
+Line No: 30
+SE = 0
+IE = 0
+DE = 0
+Total Error = 0
+Total SE: 0.14231
+Total IE: 0.011538
+Total DE: 0.030769
+Total Error: 0.18462
