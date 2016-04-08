@@ -121,9 +121,9 @@ can be run longer.
 models, and how would your classifer come to this decision?
 
 A classifier would determine a test utterance does not belong to any of the trained models if the probability for that utterance is 0 across all models. 
-However, in practice this would never happen as a gaussian always has some probaility associated to any data regardless of how small the probability is. 
+However, in practice this would never happen as a gaussian always has some probability associated to any data regardless of how small the probability is. 
 Due to this trait the utterance would be assigned to one trained speaker. 
-However, this trait can be removed by adding in a threshold limit. If a probability is below a specified value the calssifier can be set to return no 
+However, this trait can be removed by adding in a threshold limit. If a probability is below a specified value the classifier can be set to return no 
 speaker.
 
 3. Can you think of some alternative methods for doing speaker identification that don't use Gaussian
