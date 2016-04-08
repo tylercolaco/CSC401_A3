@@ -1,5 +1,5 @@
-%dir_train = '/u/cs401/speechdata/Training';
-dir_train = 'Training';
+dir_train = '/u/cs401/speechdata/Training';
+%dir_train = 'Training';
 files = dir(dir_train);
 
 count = 0;

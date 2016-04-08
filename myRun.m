@@ -1,5 +1,5 @@
-%dir_train = '/u/cs401/speechdata/Testing';
-dir_test = 'Testing';
+dir_test = '/u/cs401/speechdata/Testing';
+%dir_test = 'Testing';
 files = dir(strcat(dir_test,'/*.phn'));
 mfccfiles = dir(strcat(dir_test,'/*.mfcc'));
 names = {files.name};

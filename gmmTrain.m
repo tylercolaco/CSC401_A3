@@ -16,6 +16,7 @@ function gmms = gmmTrain( dir_train, max_iter, epsilon, M )
 %                            gmm.cov     : DxDxM matrix of covariances. 
 %                                          (:,:,i) is for i^th mixture
 %gmms is a cell array of structs
+addpath(genpath('/u/cs401/A3_ASR/code'));
 gmms = {};
 %initilaize theta
 files = dir(dir_train);
