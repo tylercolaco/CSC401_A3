@@ -26,8 +26,6 @@ for i=1:training_data
         for j=1:length(phn_files)
             X = load(strcat(speaker_data_path,mfcc_files(j).name));
             fidphn = fopen(strcat(speaker_data_path,phn_files(j).name));
-            disp(phn_files(j).name);
-            disp(mfcc_files(j).name);
             chr = fscanf(fidphn,'%c');
             tmp = textscan(chr, '%s');
             fclose(fidphn);
