@@ -39,6 +39,15 @@ REF_LEN_SUM = 0;
         ref = ref(3:length(ref));
         test = test(3:length(test));
         
+        %remove punctuation       
+        test = regexprep(test, '[,\:\;\.\?!'']','');
+        ref = regexprep(ref, '[,\:\;\.\?!'']','');
+        
+        %Lower Cases
+        test = lower(test);
+        ref = lower(ref);
+                
+        %remove
         n = length(ref);
         m = length(test);
         R = ones(n+1,m+1) * Inf;
@@ -62,21 +71,22 @@ REF_LEN_SUM = 0;
         j = m+1;
         while (dist ~= 0)
             Min = min([R(i,j-1),R(i-1,j-1),R(i-1,j)]);
-
-            if Min == R(i,j-1)
+            
+            if Min == R(i-1,j-1)
+                %Substitution
+                i=i-1;
+                j=j-1;
+                if Min < dist
+                    tempSub = tempSub +1;
+                end     
+            elseif Min == R(i,j-1)
                 %Insertion 
                 j = j-1;
                 if Min < dist
                     tempIns = tempIns +1;
                 end
 
-            elseif Min == R(i-1,j-1)
-                %Substitution
-                i=i-1;
-                j=j-1;
-                if Min < dist
-                    tempSub = tempSub +1;
-                end        
+   
             else %min == R(i-1,j)
                 %Deletion
                 i=i-1;
@@ -89,12 +99,12 @@ REF_LEN_SUM = 0;
         end
         %Print out for each line
         
-%         disp(['Line No: ' num2str(lineNo)]);
-%         disp(['SE = ' num2str(tempSub/n)]);
-%         disp(['IE = ' num2str(tempIns/n)]);
-%         disp(['DE = ' num2str(tempDel/n)]);
-%         total = (tempSub+tempIns+tempDel)/n;
-%         disp(['Total Error = ' num2str(total)]);
+        disp(['Line No: ' num2str(lineNo)]);
+        disp(['SE = ' num2str(tempSub/n)]);
+        disp(['IE = ' num2str(tempIns/n)]);
+        disp(['DE = ' num2str(tempDel/n)]);
+        total = (tempSub+tempIns+tempDel)/n;
+        disp(['Total Error = ' num2str(total)]);
         SE = SE + tempSub;
         IE = IE + tempIns;
         DE = DE + tempDel;
@@ -108,9 +118,9 @@ REF_LEN_SUM = 0;
     DE = DE/REF_LEN_SUM;
     LEV_DIST = SE + IE +DE;
     
-%     disp(['Total SE: ' num2str(SE)]);
-%     disp(['Total IE: ' num2str(IE)]);
-%     disp(['Total DE: ' num2str(DE)]);
-%     disp(['Total Error: ' num2str(LEV_DIST)]);
+    disp(['Total SE: ' num2str(SE)]);
+    disp(['Total IE: ' num2str(IE)]);
+    disp(['Total DE: ' num2str(DE)]);
+    disp(['Total Error: ' num2str(LEV_DIST)]);
 
 return
