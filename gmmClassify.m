@@ -1,14 +1,13 @@
-function result = gmmClassify(dir_test, dir_train, theta)
+function result = gmmClassify(dir_test, dir_train)
 files = dir(strcat(dir_test,'/*.mfcc'));
 
 %to get each data file load
-M = 6;
+M = 8;
 epsilon = 0.1;
 % Get trained models
 gmms = gmmTrain(dir_train, 100, epsilon, M);
-%gmms = theta;
-%files = dir('/u/cs401/speechdata/Testing/unkn_*.mfcc');
-
+%add code
+addpath(genpath('/u/cs401/A3_ASR/code'));
 % Get names of files 
 names = {files.name};
 labels = {'MMRP0', 'MPGH0', 'MKLW0', 'FSAH0', 'FVFB0', 'FJSP0', 'MTPF0', 'MRDD0', 'MRSO0', 'MKLS0', 'FETB0','FMEM0','FCJF0','MWAR0','MTJS0'};
