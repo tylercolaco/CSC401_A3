@@ -1,0 +1,768 @@
+*************************************************************** Section 2 *********************************************************************
+
+M		Epsilon			Accuracy
+2		0.10			0.87
+2		1.00			0.87
+2		10.00			0.87
+2		100.00			0.87
+2		1000.00			0.80
+2		10000.00		0.80
+2		100000.00		0.80
+3		0.10			0.93
+3		1.00			0.93
+3		10.00			0.87
+3		100.00			0.87
+3		1000.00			0.80
+3		10000.00		0.80
+3		100000.00		0.80
+4		0.10			1.00
+4		1.00			1.00
+4		10.00			1.00
+4		100.00			0.93
+4		1000.00			0.93
+4		10000.00		0.93
+4		100000.00		0.93
+5		0.10			1.00
+5		1.00			0.93
+5		10.00			0.93
+5		100.00			0.93
+5		1000.00			0.93
+5		10000.00		0.93
+5		100000.00		0.93
+6		0.10			1.00
+6		1.00			1.00
+6		10.00			1.00
+6		100.00			0.93
+6		1000.00			0.93
+6		10000.00		0.87
+6		100000.00		0.93
+7		0.10			1.00
+7		1.00			1.00
+7		10.00			1.00
+7		100.00			1.00
+7		1000.00			0.80
+7		10000.00		0.87
+7		100000.00		0.87
+8		0.10			1.00
+8		1.00			1.00
+8		10.00			1.00
+8		100.00			1.00
+8		1000.00			0.87
+8		10000.00		0.80
+8		100000.00		0.87
+
+Accuracy with only the correct 15 speakers as options
+
+M		epsilon			Accuracy
+2		0.10			0.87
+2		1.00			0.87
+2		10.00			0.87
+2		100.00			0.87
+2		1000.00			0.80
+2		10000.00		0.80
+2		100000.00		0.80
+3		0.10			0.93
+3		1.00			0.93
+3		10.00			0.93
+3		100.00			0.93
+3		1000.00			0.87
+3		10000.00		0.87
+3		100000.00		0.87
+4		0.10			1.00
+4		1.00			1.00
+4		10.00			1.00
+4		100.00			1.00
+4		1000.00			0.93
+4		10000.00		0.93
+4		100000.00		0.93
+5		0.10			1.00
+5		1.00			0.93
+5		10.00			0.93
+5		100.00			0.93
+5		1000.00			0.93
+5		10000.00		0.93
+5		100000.00		0.93
+6		0.10			1.00
+6		1.00			1.00
+6		10.00			1.00
+6		100.00			0.93
+6		1000.00			1.00
+6		10000.00		0.93
+6		100000.00		0.93
+7		0.10			1.00
+7		1.00			1.00
+7		10.00			1.00
+7		100.00			1.00
+7		1000.00			1.00
+7		10000.00		0.93
+7		100000.00		0.93
+8		0.10			1.00
+8		1.00			1.00
+8		10.00			1.00
+8		100.00			1.00
+8		1000.00			0.87
+8		10000.00		0.93
+8		100000.00		0.93
+
+As the number of components decreases so does the accuracy. The reverse is true for epsilon.
+Restricting the number of possible speakers to only the 15 in results yields higher accuracy.
+
+
+1. How might you improve the classification accuracy of the Gaussian mixtures, without adding more
+training data?
+
+Without adding more data, the classification accuracy can be improved by either increasing M (the number of Gaussians),
+or increasing the number of max iterations/decreasing epsilon. Increasing the number of Gaussians lets the model train 
+on more features of the speech patterns. However, too many Gaussians can lead to overfitting problems. Increasing the 
+number of max iterations/decreasing epsilon will give better means and variances for the Gaussians since the EM algorithm 
+can be run longer. 
+
+2. When would your classifer decide that a given test utterance comes from none of the trained speaker
+models, and how would your classifer come to this decision?
+
+A classifier would determine a test utterance does not belong to any of the trained models if the probability for that utterance is 0 across all models. 
+However, in practice this would never happen as a gaussian always has some probaility associated to any data regardless of how small the probability is. 
+Due to this trait the utterance would be assigned to one trained speaker. 
+However, this trait can be removed by adding in a threshold limit. If a probability is below a specified value the calssifier can be set to return no 
+speaker.
+
+3. Can you think of some alternative methods for doing speaker identification that don't use Gaussian
+mixtures?
+
+Since each speech pattern is just a 14 dimensional vector, the K nearest neighbours algorithm can be used to to set a 
+mean for each of the 30 training sets. Then, for each test utterance, the speech pattern with the closest Euclidean distance
+would be selected. 
+
+
+*************************************************************** Section 3 *********************************************************************
+
+															****Section 3.1*****
+
+
+The final phoneme accuracy was found to be 44.98% (493/1096) phonemes
+
+
+															****Section 3.2*****
+
+# of Gaussians	# of dimensions	# of speakers 	# of states 	classification rate
+2		3		10		1		%18.43	(202/1096)
+2		3		10		2		%20.80	(228/1096)
+2		3		15		1		%17.70	(194/1096)
+2		3		15		2		%22.45	(246/1096)
+2		7		10		1		%26.19	(287/1096)
+2		7		10		2		%30.02	(329/1096)
+2		7		15		1		%27.83  (305/1096)
+2		7		15		2		%30.75	(337/1096)
+4		3		10		1		%18.61	(204/1096)
+4		3		10		2		%23.08	(253/1096)
+4		3		15		1		%19.98	(219/1096)
+4		3		15		2		%22.07	(242/1096)
+4		7		10		1		%26.92	(295/1096)
+4		7		10		2		%30.57	(335/1096)
+4		7		15		1		%31.30	(343/1096)
+4		7		15		2		%33.03	(362/1096)
+8		14		30		3		%44.98	(493/1096)
+
+1. How might you improve the classification accuracy of the Gaussian mixtures, without adding more
+training data?
+
+Without adding more data, the classification accuracy can be improved by either increasing M (the number of Gaussians),
+increasing the number of dimensions, or increasing the number of states. Increasing the number of Gaussians from 2 to 4
+did not seem to improve the classification accuracy by much, however slight improvements are seen in the table above.
+Increasing the number of dimensions from 3 to 7 generated an average increase of %9.18 classification accuracy. 
+Increasing the number of states from 1 to 2 generated an average increase of %3.22 classification accuracy. 
+Increasing the number of gaussians from 2 to 4 generated an average increase of %1.42 classification accuracy.
+Increasing the number of speakers from 10 to 15 generated an average increase of %1.31 classification accuracy.
+
+
+For answers to question 2 and 3 please refer to the answers in section 2 as the same principles apply.
+
+
+
+															****Section 3.3*****
+Line No: 1
+SE = 0.16667
+IE = 0
+DE = 0
+Total Error = 0.16667
+Line No: 2
+SE = 0.25
+IE = 0
+DE = 0
+Total Error = 0.25
+Line No: 3
+SE = 0
+IE = 0
+DE = 0
+Total Error = 0
+Line No: 4
+SE = 0.11111
+IE = 0.11111
+DE = 0
+Total Error = 0.22222
+Line No: 5
+SE = 0.23077
+IE = 0
+DE = 0.15385
+Total Error = 0.38462
+Line No: 6
+SE = 0.14286
+IE = 0
+DE = 0.14286
+Total Error = 0.28571
+Line No: 7
+SE = 0.15385
+IE = 0
+DE = 0.076923
+Total Error = 0.23077
+Line No: 8
+SE = 0.2
+IE = 0.2
+DE = 0.1
+Total Error = 0.5
+Line No: 9
+SE = 0
+IE = 0
+DE = 0
+Total Error = 0
+Line No: 10
+SE = 0.2
+IE = 0
+DE = 0.1
+Total Error = 0.3
+Line No: 11
+SE = 0.16667
+IE = 0
+DE = 0
+Total Error = 0.16667
+Line No: 12
+SE = 0.375
+IE = 0.125
+DE = 0
+Total Error = 0.5
+Line No: 13
+SE = 0.1
+IE = 0
+DE = 0.2
+Total Error = 0.3
+Line No: 14
+SE = 0
+IE = 0.14286
+DE = 0
+Total Error = 0.14286
+Line No: 15
+SE = 0.14286
+IE = 0
+DE = 0.14286
+Total Error = 0.28571
+Line No: 16
+SE = 0.2
+IE = 0
+DE = 0.2
+Total Error = 0.4
+Line No: 17
+SE = 0.27273
+IE = 0
+DE = 0
+Total Error = 0.27273
+Line No: 18
+SE = 0.090909
+IE = 0.090909
+DE = 0.090909
+Total Error = 0.27273
+Line No: 19
+SE = 0.2
+IE = 0
+DE = 0
+Total Error = 0.2
+Line No: 20
+SE = 0
+IE = 0
+DE = 0
+Total Error = 0
+Line No: 21
+SE = 0
+IE = 0
+DE = 0
+Total Error = 0
+Line No: 22
+SE = 0.22222
+IE = 0.11111
+DE = 0
+Total Error = 0.33333
+Line No: 23
+SE = 0.18182
+IE = 0
+DE = 0
+Total Error = 0.18182
+Line No: 24
+SE = 0.1
+IE = 0
+DE = 0
+Total Error = 0.1
+Line No: 25
+SE = 0
+IE = 0
+DE = 0
+Total Error = 0
+Line No: 26
+SE = 0.16667
+IE = 0
+DE = 0
+Total Error = 0.16667
+Line No: 27
+SE = 0.5
+IE = 0
+DE = 0
+Total Error = 0.5
+Line No: 28
+SE = 0.1
+IE = 0
+DE = 0.1
+Total Error = 0.2
+Line No: 29
+SE = 0.45455
+IE = 0.27273
+DE = 0
+Total Error = 0.72727
+Line No: 30
+SE = 0.33333
+IE = 0
+DE = 0
+Total Error = 0.33333
+
+
+----- Sums -----
+
+Total SE: 0.17308
+Total IE: 0.038462
+Total DE: 0.046154
+Total Error: 0.25769
+
+
+
+*************************************************************** Section 4 *********************************************************************
+
+															**** Section 4.1 - Translations *****
+
+now here is truly a Marvel
+captain features a muskrat and a tadpole
+just let me die in peace
+the sculptor looked at him bug eyed and amazed angry
+flash live in the trees as a cricket ball twig in several directions
+this is particularly true in site selection
+we would lose our export markets and deny ourselves imports we need
+continental have teaspoons of soy sauce that you add
+finally he asked do you object to petting
+try every other line first then fill in the interior
+change involves the displacement of femme
+to his puzzlement there suddenly was no Hayes
+don't ask me to carry read like that
+full moon shone brightly that night
+tug boats a capable of hauling huge loads
+did dad do academic betting
+she had your dark suit increase you wash water all year
+the thick el virus was nearly overwhelmed by Dutch elm disease
+cop number of teaspoons of soy sauce that you had
+waging sweaters are made of lambs will
+we think differently
+a toothpaste tube should be squeezed from the bottom
+ran away a black knight with a lawful wedded man
+don't ask me to carry an oily rag like that
+town asked me to carry an oily rag like that
+index words and electronic switches may be reserved in the following ways
+yeah avalanche triggered a minor earthquake
+don't ask me to carry an oily rag like that
+the thick and Forrest was nearly overwhelmed by Dutch elm disease
+when all else fails use force
+
+
+															**** Section 4.1 - Scores *****
+
+Line No: 1
+SE = 0
+IE = 0
+DE = 0
+Total Error = 0
+Line No: 2
+SE = 0.125
+IE = 0
+DE = 0.125
+Total Error = 0.25
+Line No: 3
+SE = 0
+IE = 0
+DE = 0
+Total Error = 0
+Line No: 4
+SE = 0.11111
+IE = 0.11111
+DE = 0
+Total Error = 0.22222
+Line No: 5
+SE = 0.46154
+IE = 0
+DE = 0
+Total Error = 0.46154
+Line No: 6
+SE = 0
+IE = 0
+DE = 0
+Total Error = 0
+Line No: 7
+SE = 0
+IE = 0
+DE = 0.076923
+Total Error = 0.076923
+Line No: 8
+SE = 0.5
+IE = 0
+DE = 0.1
+Total Error = 0.6
+Line No: 9
+SE = 0
+IE = 0
+DE = 0
+Total Error = 0
+Line No: 10
+SE = 0.2
+IE = 0
+DE = 0
+Total Error = 0.2
+Line No: 11
+SE = 0.16667
+IE = 0
+DE = 0
+Total Error = 0.16667
+Line No: 12
+SE = 0.125
+IE = 0
+DE = 0
+Total Error = 0.125
+Line No: 13
+SE = 0.1
+IE = 0
+DE = 0.2
+Total Error = 0.3
+Line No: 14
+SE = 0.14286
+IE = 0
+DE = 0.14286
+Total Error = 0.28571
+Line No: 15
+SE = 0.28571
+IE = 0.14286
+DE = 0
+Total Error = 0.42857
+Line No: 16
+SE = 0.2
+IE = 0
+DE = 0
+Total Error = 0.2
+Line No: 17
+SE = 0.18182
+IE = 0
+DE = 0
+Total Error = 0.18182
+Line No: 18
+SE = 0.18182
+IE = 0
+DE = 0
+Total Error = 0.18182
+Line No: 19
+SE = 0.3
+IE = 0.1
+DE = 0.1
+Total Error = 0.5
+Line No: 20
+SE = 0.28571
+IE = 0
+DE = 0
+Total Error = 0.28571
+Line No: 21
+SE = 0
+IE = 0
+DE = 0
+Total Error = 0
+Line No: 22
+SE = 0
+IE = 0
+DE = 0
+Total Error = 0
+Line No: 23
+SE = 0.090909
+IE = 0
+DE = 0.090909
+Total Error = 0.18182
+Line No: 24
+SE = 0
+IE = 0
+DE = 0
+Total Error = 0
+Line No: 25
+SE = 0.2
+IE = 0
+DE = 0
+Total Error = 0.2
+Line No: 26
+SE = 0
+IE = 0
+DE = 0
+Total Error = 0
+Line No: 27
+SE = 0.16667
+IE = 0
+DE = 0
+Total Error = 0.16667
+Line No: 28
+SE = 0
+IE = 0
+DE = 0
+Total Error = 0
+Line No: 29
+SE = 0.18182
+IE = 0
+DE = 0
+Total Error = 0.18182
+Line No: 30
+SE = 0
+IE = 0
+DE = 0
+Total Error = 0
+
+------ Sum -------
+
+Total SE: 0.14231
+Total IE: 0.011538
+Total DE: 0.030769
+Total Error: 0.18462
+
+
+
+															**** Section 4.2 - Translations *****
+
+now here is truly of Marvel
+the cartoon features of muskrat and a tadpole
+just let me die in peace
+the sculptor looked at MP jeep and amazed angry
+a flash illumined the trees is a cricket ball twig in several directions
+this is particularly true in site selection
+we would lose our export markets and deny ourselves the imports we need
+count the number of teaspoons of soy sauce that you add
+finally he asked do you object to petting
+draw every other line first then fill in the interior
+change involves the displacement of forum
+to his puzzlement there suddenly was no Hayes
+Dante asked me to carry an oily rag like that
+the full moon shone brightly that night
+tug boats are capable of hauling huge loads
+did dad do academic bidding
+she had your dark suit in greasy wash water all year
+the thick around forest was nearly overwhelmed by Dutch elm disease
+count the number of teaspoons of soy sauce that you add
+Norwegian sweaters are made of lambs will
+we think differently
+a toothpaste tube should be squeezed from the bottom
+ran away on a black knight with a lawful wedded man
+dont ask me to carry an oily rag like that
+Dante asked me to carry an oily rag like that
+index words and electronic switches may be reserved in the following ways
+the avalanche triggered a minor earthquake
+dont ask me to carry an oily rag like that
+the thick elm forest was nearly overwhelmed by Dutch elm disease
+when all else fails use force
+
+															**** Section 4.2 - Scores *****
+
+Line No: 1
+SE = 0.16667
+IE = 0
+DE = 0
+Total Error = 0.16667
+
+Line No: 2
+SE = 0.125
+IE = 0
+DE = 0
+Total Error = 0.125
+Line No: 3
+SE = 0
+IE = 0
+DE = 0
+Total Error = 0
+
+Line No: 4 - female
+SE = 0.22222
+IE = 0
+DE = 0
+Total Error = 0.22222
+Line No: 5- female
+SE = 0.30769
+IE = 0
+DE = 0
+Total Error = 0.30769
+Line No: 6 - female
+SE = 0
+IE = 0
+DE = 0
+Total Error = 0
+Line No: 7
+SE = 0
+IE = 0
+DE = 0
+Total Error = 0
+Line No: 8
+SE = 0.1
+IE = 0.1
+DE = 0
+Total Error = 0.2
+Line No: 9
+SE = 0
+IE = 0
+DE = 0
+Total Error = 0
+Line No: 10
+SE = 0.1
+IE = 0
+DE = 0
+Total Error = 0.1
+
+Line No: 11 - female
+SE = 0.16667
+IE = 0
+DE = 0
+Total Error = 0.16667
+
+Line No: 12 - female
+SE = 0.125
+IE = 0
+DE = 0
+Total Error = 0.125
+
+Line No: 13 - female
+SE = 0.2
+IE = 0
+DE = 0
+Total Error = 0.2
+Line No: 14
+SE = 0
+IE = 0
+DE = 0
+Total Error = 0
+Line No: 15
+SE = 0.14286
+IE = 0.14286
+DE = 0
+Total Error = 0.28571
+Line No: 16
+SE = 0
+IE = 0
+DE = 0
+Total Error = 0
+
+Line No: 17 - female
+SE = 0
+IE = 0
+DE = 0
+Total Error = 0
+
+Line No: 18 - female
+SE = 0.090909
+IE = 0
+DE = 0
+Total Error = 0.090909
+Line No: 19
+SE = 0.1
+IE = 0.1
+DE = 0
+Total Error = 0.2
+Line No: 20
+SE = 0.14286
+IE = 0
+DE = 0
+Total Error = 0.14286
+Line No: 21
+SE = 0
+IE = 0
+DE = 0
+Total Error = 0
+
+Line No: 22 - female
+SE = 0
+IE = 0
+DE = 0
+Total Error = 0
+
+Line No: 23 - female
+SE = 0.090909
+IE = 0
+DE = 0
+Total Error = 0.090909
+
+Line No: 24
+SE = 0
+IE = 0
+DE = 0
+Total Error = 0
+
+Line No: 25 - female
+SE = 0.2
+IE = 0
+DE = 0
+Total Error = 0.2
+Line No: 26
+SE = 0
+IE = 0
+DE = 0
+Total Error = 0
+
+Line No: 27 - female
+SE = 0
+IE = 0
+DE = 0
+Total Error = 0
+Line No: 28
+SE = 0
+IE = 0
+DE = 0
+Total Error = 0
+Line No: 29
+SE = 0
+IE = 0
+DE = 0
+Total Error = 0
+Line No: 30
+SE = 0
+IE = 0
+DE = 0
+Total Error = 0
+
+------ Sum ------
+Total SE: 0.080769
+Total IE: 0.011538
+Total DE: 0
+Total Error: 0.092308
+
+
+Male vs Female
+When comparing the accuracy of female versus male the easiest case to use are sentenced 24 and 25. 
+This is because they are the same phrase  but 24 is uttered by a male and 25 by a female. 
+For both sections 4.1 and 4.2 there were no errors for the male speech but a 0.2 SE for the female.
+A possible explaination of this is the pitch of voice. Traditionally males are associated with a lower
+voice which corresponds to a lower frequency. On the other hand females have a higher voice and a higher frequency.
+When analyzing these sounds, if the same sampling rate was used data would be more accuratly gather from the speech
+with a lower frequency. Thus, the male voice would be easier to process and translate versus the female.
+
+
+Synthesized vs Non-Synthesized
+
+The amount of errors of the translated text is significantly lower when the text was first synthesized. This is because in the synthesiziation process
+IBM is able to directly have access to the text and create a corresponding sound file. Thus, when then doing the Speech to text component the mapping would be
+similar if not identicaly to the process undertaken in Ibms text to speech (but the reverse). Also, since the flac files are generated there is minimal external
+noise and consistency across the files. The unsynthesized flac files have a variety of speakers each with their own accents and personal nuances. Thus the variety
+in speakers along with external white noise likely caused the increase in WER.
+
+
+
+
+
