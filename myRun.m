@@ -48,9 +48,6 @@ for i=1:length(files)
             if(strcmp(guess, 'sil'))
                 guess = 'h#';
             end
-            disp(guess);
-            disp(arr{k*3});
-            disp(strcmp(guess, arr{k*3}));
             if(strcmp(guess, arr{k*3}))
                 correct = correct + 1;
             else
@@ -58,6 +55,5 @@ for i=1:length(files)
             end
         end
     end
-    disp(correct/(incorrect+correct));
 end
 disp(correct/(incorrect+correct));
