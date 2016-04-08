@@ -16,3 +16,32 @@
 4		7		15		1		%31.30	(343/1096)
 4		7		15		2		%33.03	(362/1096)
 8		14		30		3		%44.98	(493/1096)
+
+1. How might you improve the classification accuracy of the Gaussian mixtures, without adding more
+training data?
+
+Without adding more data, the classification accuracy can be improved by either increasing M (the number of Gaussians),
+increasing the number of dimensions, or increasing the number of states. Increasing the number of Gaussians from 2 to 4
+did not seem to improve the classification accuracy by much, however slight improvements are seen in the table above.
+Increasing the number of dimensions from 3 to 7 generated an average increase of %9.18 classification accuracy. 
+Increasing the number of states from 1 to 2 generated an average increase of %3.22 classification accuracy. 
+Increasing the number of gaussians from 2 to 4 generated an average increase of %1.42 classification accuracy.
+Increasing the number of speakers from 10 to 15 generated an average increase of %1.31 classification accuracy.
+
+
+2. When would your classifer decide that a given test utterance comes from none of the trained speaker
+models, and how would your classifer come to this decision?
+
+The classifier would decide that a test utterance came from none of the trained speaker models if the given test utterance 
+does not fall in any of the Gaussians of any of the 30 trained hidden markov models. 
+
+Maybe can't?
+
+3. Can you think of some alternative methods for doing speaker identification that don't use Gaussian
+mixtures?
+
+Since each speech pattern is just a 14 dimensional vector, the K nearest neighbours algorithm can be used to to set a 
+mean for each of the 30 training sets. Then, for each test utterance, the speech pattern with the closest Euclidean distance
+would be selected. 
+
+
